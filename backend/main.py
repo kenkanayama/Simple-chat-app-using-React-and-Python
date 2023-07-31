@@ -1,26 +1,15 @@
-import tornado.ioloop
-import tornado.web
-import tornado.websocket
+from flask import Flask
+from flask_socketio import SocketIO
+from flask_cors import CORS
 
-class WebSocketHandler(tornado.websocket.WebSocketHandler):
-    clients = set()
+app = Flask(__name__)
+CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
-    def open(self):
-        self.clients.add(self)
+@socketio.on('message')
+def handle_message(data):
+    print('received message: ' + data)
+    socketio.emit('response', 'This is a response')
 
-    def on_message(self, message):
-        for client in self.clients:
-            client.write_message(message)
-
-    def on_close(self):
-        self.clients.remove(self)
-
-def make_app():
-    return tornado.web.Application([
-        (r"/websocket", WebSocketHandler),
-    ])
-
-if __name__ == "__main__":
-    app = make_app()
-    app.listen(8888)
-    tornado.ioloop.IOLoop.current().start()
+if __name__ == '__main__':
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)  # , debug=Trueで自動リロード

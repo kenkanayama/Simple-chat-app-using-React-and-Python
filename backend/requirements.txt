@@ -1,1 +1,4 @@
-tornado
+flask
+flask-cors
+flask-socketio
+eventlet
