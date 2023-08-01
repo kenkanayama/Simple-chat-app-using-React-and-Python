@@ -14,7 +14,7 @@ def handle_connect():
 @socketio.on('message')
 def handle_message(data):
     print('received message: ' + data)
-    socketio.emit('response', 'This is a response')
+    socketio.emit('data', 'This is a response')
 
 @app.route('/user/<recipient>', methods=['POST'])
 def receive_message(recipient):
@@ -27,7 +27,7 @@ def receive_message(recipient):
             'sender': sender
         }
     }
-    socketio.emit('message', message, namespace=f'/user/{recipient}')  # recipientのnamespaceにブロードキャスト
+    socketio.emit('message', message, namespace=f'/user/{recipient}')
     return jsonify({'message': f'Message sent to /user/{recipient}, from /user/{sender}'}), 200
 
 if __name__ == '__main__':

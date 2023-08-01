@@ -11,11 +11,12 @@ const UserPage = () => {
 
   useEffect(() => {
     // usernameのnamespaceで接続
-    const socket = io(`http://localhost:5000/user/${username}`);
+    const socket = io('http://localhost:5000');
 
     // サーバーからのmessageイベントをリッスン
     socket.on('message', (msg) => {
-      setMessage(msg.data);  // サーバーから送信されたデータをセット
+      console.log('Message received', msg);
+      setMessage(msg);  // サーバーから送信されたデータをセット
     });
 
     // コンポーネントのアンマウント時にsocketを閉じる
@@ -25,7 +26,6 @@ const UserPage = () => {
   }, [username]);
 
   const sendMessage = () => {
-    console.log(recipient, inputMessage, username);
     fetch(`http://localhost:5000/user/${recipient}`, {
       method: 'POST',
       headers: {
@@ -41,7 +41,6 @@ const UserPage = () => {
     })
     .then(data => {
       console.log('Success:', data);  // the response data from the server
-      setMessage(data.message);
     })
     .catch(error => {
       console.error('Error:', error);
