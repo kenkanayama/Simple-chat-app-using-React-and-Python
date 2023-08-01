@@ -1,13 +1,20 @@
+// src/routes/index.js
 import React from 'react';
-import { Route, Routes as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import App from '../components/App';
+import UserPage from '../pages/UserPage';
 import SocketIoPage from '../pages/SocketIoPage';
 
-const Routes = () => {
+const AppRoutes = () => {
   return (
     <Router>
-      <Route path="/socketio" element={<SocketIoPage />} />
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/socketio" element={<SocketIoPage />} />
+        <Route path="/user/:username" element={<UserPage />} />
+      </Routes>
     </Router>
   );
 };
 
-export default Routes;
+export default AppRoutes;
