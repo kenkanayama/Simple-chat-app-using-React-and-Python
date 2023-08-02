@@ -39,7 +39,11 @@ const Chat = () => {
         {messages.map((message, index) => (
           <div
             key={index}
-            className={`chat-message ${message.username === username ? 'right' : 'left'}`}
+            className={
+              message.systemMessage
+                  ? "chat-message"
+                  : `chat-message ${message.username === username ? 'right' : 'left'}`
+            }
           >
             {message.systemMessage ? (
               <div className="chat-message-text">{message.message}</div>
