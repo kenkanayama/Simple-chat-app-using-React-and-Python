@@ -1,15 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
+import { useLocation } from 'react-router-dom';
+import '../styles/chat.css';
 
 const Chat = () => {
-  const [username, setUsername] = useState('');
-  const [room, setRoom] = useState('');
+  const location = useLocation();
+  const { username, room } = location.state;
+
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const socket = useRef();
 
   useEffect(() => {
     socket.current = io('http://localhost:5000');
+
+    socket.current.emit('join', { username, room });
 
     socket.current.on('message', (message) => {
       setMessages((messages) => [...messages, message]);
@@ -18,46 +23,34 @@ const Chat = () => {
     return () => {
       socket.current.disconnect();
     };
-  }, []);
-
-  const joinRoom = () => {
-    if (socket.current) {
-      socket.current.emit('join', { username, room });
-    }
-  };
+  }, [username, room]);
 
   const sendMessage = (e) => {
     e.preventDefault();
-    if (room.trim() === "") {
-      alert("Please join a room to send a message.");
-      return;
-    }
     if (message !== "" && socket.current) {
       socket.current.emit('message', { room, username, message });
       setMessage('');
     }
   };
 
-
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(event) => setUsername(event.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Room"
-        value={room}
-        onChange={(event) => setRoom(event.target.value)}
-      />
-      <button onClick={joinRoom}>Join Room</button>
-
-      <div>
+    <div className="chat">
+      <div className="chat-messages">
         {messages.map((message, index) => (
-          <div key={index}>{message}</div>
+          <div
+            key={index}
+            className={`chat-message ${message.username === username ? 'right' : 'left'}`}
+          >
+            {message.systemMessage ? (
+              <div className="chat-message-text">{message.message}</div>
+            ) : (
+              <>
+                <div className="chat-message-user">{message.username}</div>
+                <div className="chat-message-text">{message.message}</div>
+                <div className="chat-message-timestamp">{new Date(message.timestamp).toLocaleString()}</div>
+              </>
+            )}
+          </div>
         ))}
       </div>
 
