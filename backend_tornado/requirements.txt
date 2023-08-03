@@ -1,0 +1,5 @@
+bidict==0.22.1
+python-engineio==4.5.1
+python-socketio==5.8.0
+pytz==2023.3
+tornado==6.3.2

@@ -14,7 +14,8 @@ const Chat = () => {
 
   useEffect(() => {
     // マウント時にSocket.IOを作成し、Socket.IOサーバーに接続する
-    socket.current = io('http://localhost:5000');
+    // socket.current = io('http://localhost:5000');
+    socket.current = io('http://localhost:8888');
 
     socket.current.emit('join', { username, room });
 
