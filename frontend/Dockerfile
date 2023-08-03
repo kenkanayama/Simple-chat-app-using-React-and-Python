@@ -15,7 +15,6 @@ RUN npm install --silent
 
 EXPOSE 3000
 
-# 開発サーバーを起動
 # CMD ["npm", "start"]
-# 無限ループを使ってbashを起動
+# 自分の任意のタイミングで"npm start"を実行したいため以下のコマンドでサーバーを起動しておいている
 CMD ["bash", "-c", "while true; do echo 'Container is running'; sleep 60; done"]
