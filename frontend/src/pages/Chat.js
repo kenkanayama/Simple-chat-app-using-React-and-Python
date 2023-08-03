@@ -1,26 +1,30 @@
 import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/chat.css';
 
 const Chat = () => {
   const location = useLocation();
   const { username, room } = location.state;
+  const navigate = useNavigate();
 
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const socket = useRef();
 
   useEffect(() => {
+    // マウント時にSocket.IOを作成し、Socket.IOサーバーに接続する
     socket.current = io('http://localhost:5000');
 
     socket.current.emit('join', { username, room });
 
+    // Socket.IOサーバーからのメッセージを受信するようになる
     socket.current.on('message', (message) => {
       setMessages((messages) => [...messages, message]);
     });
 
     return () => {
+      socket.current.emit('leave', { username, room });
       socket.current.disconnect();
     };
   }, [username, room]);
@@ -33,12 +37,20 @@ const Chat = () => {
     }
   };
 
+  const leaveRoom = () => {
+    if(socket.current) {
+      socket.current.emit('leave', { username, room });
+      navigate('/');
+    }
+  };
+
   return (
     <div className="chat">
       <div className="chat-messages">
         {messages.map((message, index) => (
           <div
-            key={index}
+          key={index}
+            // ユーザーのメッセージかどうかでクラスを変更する
             className={
               message.systemMessage
                   ? "chat-message"
@@ -67,6 +79,8 @@ const Chat = () => {
         />
         <button type="submit">Send</button>
       </form>
+
+      <button onClick={leaveRoom}>Leave</button>
     </div>
   );
 };

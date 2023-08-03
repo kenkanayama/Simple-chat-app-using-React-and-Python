@@ -11,7 +11,7 @@ const Setup = () => {
     if (username !== "" && room !== "") {
       navigate('/chat', { state: { username, room } });
     } else {
-      alert('Please fill in both fields.');
+      alert('username と room を入力してください');
     }
   };
 
