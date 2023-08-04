@@ -18,7 +18,7 @@ def on_join(data):
     room = data['room']
     join_room(room)
     message_data = {
-        'message': f'[{username}]が[{room}]に入室しました。',
+        'message': f'[{username}]が Flask-socketioサーバーの room[{room}]に入室しました。',
         'systemMessage': True
     }
     send(message_data, room=room)

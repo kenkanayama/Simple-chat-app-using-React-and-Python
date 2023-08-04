@@ -5,7 +5,7 @@ import '../styles/chat.css';
 
 const Chat = () => {
   const location = useLocation();
-  const { username, room } = location.state;
+  const { username, room, server } = location.state;
   const navigate = useNavigate();
 
   const [message, setMessage] = useState('');
@@ -13,9 +13,10 @@ const Chat = () => {
   const socket = useRef();
 
   useEffect(() => {
+    // serverに基づいてURLを選択
     // マウント時にSocket.IOを作成し、Socket.IOサーバーに接続する
-    // socket.current = io('http://localhost:5000');
-    socket.current = io('http://localhost:8888');
+    const url = server === 'Flask-SocketIO' ? 'http://localhost:5000' : 'http://localhost:8888';
+    socket.current = io(url);
 
     socket.current.emit('join', { username, room });
 
