@@ -15,6 +15,6 @@ RUN npm install --silent
 
 EXPOSE 3000
 
-# CMD ["npm", "start"]
-# 自分の任意のタイミングで"npm start"を実行したいため以下のコマンドでサーバーを起動しておいている
-CMD ["bash", "-c", "while true; do echo 'Container is running'; sleep 60; done"]
+CMD ["npm", "start"]
+# 自分の任意のタイミングでコンテナ上で"npm start"を実行したい場合は以下のコマンドでサーバーを起動しておく
+# CMD ["bash", "-c", "while true; do echo 'Container is running'; sleep 60; done"]
