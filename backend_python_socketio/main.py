@@ -45,7 +45,7 @@ async def join(sid, data):
     room = data['room']
     sio.enter_room(sid, room)
     message_data = {
-        'message': f'[{username}]が[{room}]に入室しました。',
+        'message': f'[{username}]が Python-SocketIO(&Tornado)サーバーの room[{room}]に入室しました。',
         'systemMessage': True
     }
     await sio.emit('message', message_data, room=room)

@@ -19,8 +19,8 @@ services:
     volumes:
       - ./backend_flask_socketio:/app
   server2:
-    build: ./backend_tornado
+    build: ./backend_python_socketio
     ports:
       - "8888:8888"
     volumes:
-      - ./backend_tornado:/app
+      - ./backend_python_socketio:/app
