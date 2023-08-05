@@ -53,17 +53,3 @@ Socket.IOはWebSocketを基礎として以下のような機能を簡単に実�
 >docker-compose build --no-cache
 
 >docker-compose up -d
-
-以下でフロントエンドのDocker環境へ入り、
->docker-compose exec web sh
-
-以下で起動
-> npm start
-
-以下でバックエンドのDocker環境へ入り、
->docker-compose exec server1 sh
-
->docker-compose exec server2 sh
-
-それぞれ以下で起動
-> python main.py
