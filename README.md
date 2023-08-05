@@ -56,5 +56,8 @@ Socket.IOはWebSocketを基礎として以下のような機能を簡単に実�
 
 ## デモ
 
-https://github.com/kenkanayama/Simple-chat-app-using-React-and-Python/assets/44771224/944db587-5bed-4c1a-8acd-e0303a0a82c2
+
+
+https://github.com/kenkanayama/Simple-chat-app-using-React-and-Python/assets/44771224/bf40e33c-ad2c-4dce-bbbf-45781c6dd22c
+
 
